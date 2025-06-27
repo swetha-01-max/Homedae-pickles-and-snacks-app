@@ -111,6 +111,53 @@ def login_required(f):
         return f(*args, **kwargs)
     return wrapper
 
+# Contact Page
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        print(f"Contact from {name} ({email}): {message}")
+        flash("Thank you for contacting us!", "success")
+        return redirect(url_for('contact'))
+
+    return render_template_string("""
+    <h2>Contact Us</h2>
+    <form method="POST">
+        Name: <input type="text" name="name" required><br><br>
+        Email: <input type="email" name="email" required><br><br>
+        Message: <br><textarea name="message" rows="5" cols="40" required></textarea><br><br>
+        <button type="submit">Send</button>
+    </form>
+    <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
+    """)
+
+# Reviews Page
+@app.route('/reviews', methods=['GET', 'POST'])
+def product_reviews():
+    if request.method == 'POST':
+        user = session.get('username', 'Guest')
+        review = request.form['review']
+        reviews.append({'user': user, 'review': review})
+        flash("Thanks for your review!", "success")
+        return redirect(url_for('product_reviews'))
+
+    return render_template_string("""
+    <h2>Leave a Review</h2>
+    <form method="POST">
+        <textarea name="review" rows="4" cols="50" placeholder="Write your review here..." required></textarea><br><br>
+        <button type="submit">Submit Review</button>
+    </form>
+    <h3>All Reviews</h3>
+    <ul>
+    {% for r in reviews %}
+        <li><b>{{ r.user }}</b>: {{ r.review }}</li>
+    {% endfor %}
+    </ul>
+    <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
+    """, reviews=reviews)
+    
 @app.route('/')
 @login_required
 def products_page():
