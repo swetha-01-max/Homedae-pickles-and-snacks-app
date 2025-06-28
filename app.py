@@ -376,7 +376,10 @@ def checkout():
         </ul>
         <p><strong>Total: ₹{{ total }}</strong></p>
         <form method="POST" action="{{ url_for('place_order') }}">
-            <button type="submit">✅ Place Order</button>
+        Name:<input name="name"><br>
+        Address:<input name="address"><br>
+        phone:=<input name="phone"><br> action="{{ url_for('place_order') }}">
+        <button type="submit">✅ Place Order</button>
         </form>
     {% else %}
         <p>Your cart is empty.</p>
