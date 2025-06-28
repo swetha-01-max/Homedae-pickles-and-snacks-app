@@ -184,17 +184,18 @@ def product_reviews():
 @login_required
 def products_page():
     return render_template_string("""
-    <h1>Welcome, {{ session['username'] }}!</h1>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <h1 style="color:#2c3e50;">Welcome, {{ session['username'] }}!</h1>
     <a href="{{ url_for('logout') }}">Logout</a><br><br>
                                   
     <a href="{{ url_for('contact') }}">📬 Contact</a> |
     <a href="{{ url_for('product_reviews') }}">⭐ Reviews</a><br><br>
 
-    <h2>Products</h2>
-    <ul>
+    <h2 style="color:#34495e;">Products</h2>
+    <ul style="list-style:none;">
         {% for product in products %}
         <li>
-            <img src="{{ product.image }}" width="100"><br>
+            <img src="{{ product.image }}" width="100" style="border-radius:8px;"><br>
             <b>{{ product.name }}</b><br>
             ₹{{ product.price }}<br>
             <a href="{{ url_for('add_to_cart', product_id=product.id) }}">Add to Cart</a>
@@ -239,7 +240,8 @@ def login():
         else:
             flash("Invalid username or password.", "error")
     return render_template_string("""
-    <h2>Login</h2>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                          
+    <h2 style="color:#2c3e50;">Login</h2>
     <form method="POST">
         Username: <input type="text" name="username"><br><br>
         Password: <input type="password" name="password"><br><br>
