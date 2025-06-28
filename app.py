@@ -133,16 +133,17 @@ def contact():
         contacts = []
 
     return render_template_string("""
-    <h2>Contact Us</h2>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <h2 style="color:#2c3e50;">Contact Us</h2>
     <form method="POST">
         Name: <input type="text" name="name" required><br><br>
         Email: <input type="email" name="email" required><br><br>
         Message: <br><textarea name="message" rows="5" cols="40" required></textarea><br><br>
         <button type="submit">Send</button>
     </form>
-    <ul>                              
+    <ul style="list-style:none;">                              
      {% for line in contacts %}
-    <li>{{ line }}</li>
+    <li  style="margin-bottom:25px; padding:10px; background:#fff; border-radius:10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">{{ line }}</li>
     {% endfor %}
     </ul>
 
@@ -166,15 +167,16 @@ def product_reviews():
         saved_reviews = []
 
     return render_template_string("""
-    <h2>Leave a Review</h2>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <h2 style="color:#2c3e50;">Leave a Review</h2>
     <form method="POST">
         <textarea name="review" rows="4" cols="50" placeholder="Write your review here..." required></textarea><br><br>
         <button type="submit">Submit Review</button>
     </form>
-    <h3>All Reviews</h3>
-    <ul>
+    <h3 style="color:#34495e;">All Reviews</h3>
+    <ul style="list-style:none;" >
     {% for r in reviews %}
-        <li> {{ r }}</li>
+    <li style="margin-bottom:25px; padding:10px; background:#fff; border-radius:10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);"> {{ r }}</li>
     {% endfor %}
     </ul>
     <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
@@ -219,7 +221,8 @@ def register():
             flash("Registered successfully. Please login.", "success")
             return redirect(url_for('login'))
     return render_template_string("""
-    <h2>Register</h2>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <h2 style="color:#2c3e50;">Register</h2>
     <form method="POST">
         Username: <input type="text" name="username"><br><br>
         Password: <input type="password" name="password"><br><br>
@@ -324,10 +327,11 @@ def cart():
     total = subtotal + shipping
 
     return render_template_string("""
-    <h1>Your Cart ({{ session['username'] }})</h1>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                             
+    <h1 style="color:#2c3e50;">Your Cart ({{ session['username'] }})</h1>
     <a href="{{ url_for('logout') }}">Logout</a><br><br>
     {% if cart_items %}
-        <ul>
+        <ul style="list-style:none;">
         {% for item in cart_items %}
             <li>
                 <img src="{{ item.image }}" width="100"><br>
@@ -367,9 +371,10 @@ def checkout():
             total += product['price'] * quantity
 
     return render_template_string("""
-    <h1>Checkout</h1>
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                              
+    <h1  style="color:#2c3e50;">Checkout</h1>
     {% if cart_items %}
-        <ul>
+        <ul style="list-style:none;">
             {% for item in cart_items %}
                 <li>{{ item.name }} × {{ item.quantity }} — ₹{{ item.quantity * item.price }}</li>
             {% endfor %}
@@ -398,6 +403,7 @@ def place_order():
 @login_required
 def order_success():
     return render_template_string("""
+    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                             
     <h2>✅ Order Successful!</h2>
     <p>Thank you for your order, {{ session['username'] }}! 😊</p>
     <a href="{{ url_for('products_page') }}">← Back to Products</a><br>
