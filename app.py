@@ -2,9 +2,21 @@ from flask import Flask, render_template_string, redirect, url_for, session, req
 from functools import wraps
 from werkzeug.exceptions import BadRequest
 import os
+import boto3
+import uuid
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
+
+# AWS configuration
+region = 'ap-south-1'  # Change if needed
+
+dynamodb = boto3.resource('dynamodb', region_name=region)
+sns = boto3.client('sns', region_name=region)
+
+# DynamoDB tables
+contacts_table = dynamodb.Table('contacts')
+reviews_table = dynamodb.Table('reviews')
 
 # Simple in-memory user storage
 users = {}
@@ -156,15 +168,23 @@ def product_reviews():
     if request.method == 'POST':
         user = session.get('username', 'Guest')
         review = request.form['review']
+        reviews_table.put_item(Item={
+            'id': str(uuid.uuid4()),
+            'user': user,
+            'review': review
+         })
         with open(REVIEWS_FILE, 'a') as f:
             f.write(f"{user}: {review}\n")
         flash("Thanks for your review!", "success")
         return redirect(url_for('product_reviews'))
+   # DynamoDB doesn't support scan() without provisioned throughput in free tier well
+    reviews = []
     try:
-        with open(REVIEWS_FILE, 'r') as f:
-            saved_reviews = [line.strip() for line in f.readlines()]
-    except FileNotFoundError:
-        saved_reviews = []
+        response = reviews_table.scan()
+        reviews = [item['user'] + ': ' + item['review'] for item in response.get('Items', [])]
+    except Exception as e:
+        reviews = ["Error fetching reviews: " + str(e)]
+
 
     return render_template_string("""
     <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
@@ -180,7 +200,7 @@ def product_reviews():
     {% endfor %}
     </ul>
     <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
-    """, reviews=saved_reviews)
+    """, reviews=reviews)
     
 @app.route('/')
 @login_required
