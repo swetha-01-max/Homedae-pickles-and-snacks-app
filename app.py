@@ -9,6 +9,10 @@ app.secret_key = 'your_secret_key_here'
 # Simple in-memory user storage
 users = {}
 
+# Store reviews and contacts in files
+REVIEWS_FILE = 'reviews.txt'
+CONTACTS_FILE = 'contacts.txt'
+
 # Product List with Online Image URLs
 products = [
     # Non-Veg Pickles
@@ -118,9 +122,15 @@ def contact():
         name = request.form['name']
         email = request.form['email']
         message = request.form['message']
-        print(f"Contact from {name} ({email}): {message}")
+        with open(CONTACTS_FILE, 'a') as f:
+            f.write(f"{name} ({email}): {message}\n")
         flash("Thank you for contacting us!", "success")
         return redirect(url_for('contact'))
+    try:
+        with open(CONTACTS_FILE, 'r') as f:
+            contacts = f.readlines()
+    except FileNotFoundError:
+        contacts = []
 
     return render_template_string("""
     <h2>Contact Us</h2>
@@ -130,8 +140,14 @@ def contact():
         Message: <br><textarea name="message" rows="5" cols="40" required></textarea><br><br>
         <button type="submit">Send</button>
     </form>
+    <ul>                              
+     {% for line in contacts %}
+    <li>{{ line }}</li>
+    {% endfor %}
+    </ul>
+
     <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
-    """)
+    """,contacts=contacts)
 
 # Reviews Page
 @app.route('/reviews', methods=['GET', 'POST'])
@@ -139,9 +155,15 @@ def product_reviews():
     if request.method == 'POST':
         user = session.get('username', 'Guest')
         review = request.form['review']
-        reviews.append({'user': user, 'review': review})
+        with open(REVIEWS_FILE, 'a') as f:
+            f.write(f"{user}: {review}\n")
         flash("Thanks for your review!", "success")
         return redirect(url_for('product_reviews'))
+    try:
+        with open(REVIEWS_FILE, 'r') as f:
+            saved_reviews = [line.strip() for line in f.readlines()]
+    except FileNotFoundError:
+        saved_reviews = []
 
     return render_template_string("""
     <h2>Leave a Review</h2>
@@ -152,11 +174,11 @@ def product_reviews():
     <h3>All Reviews</h3>
     <ul>
     {% for r in reviews %}
-        <li><b>{{ r.user }}</b>: {{ r.review }}</li>
+        <li> {{ r }}</li>
     {% endfor %}
     </ul>
     <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
-    """, reviews=reviews)
+    """, reviews=saved_reviews)
     
 @app.route('/')
 @login_required
@@ -164,6 +186,10 @@ def products_page():
     return render_template_string("""
     <h1>Welcome, {{ session['username'] }}!</h1>
     <a href="{{ url_for('logout') }}">Logout</a><br><br>
+                                  
+    <a href="{{ url_for('contact') }}">📬 Contact</a> |
+    <a href="{{ url_for('product_reviews') }}">⭐ Reviews</a><br><br>
+
     <h2>Products</h2>
     <ul>
         {% for product in products %}
