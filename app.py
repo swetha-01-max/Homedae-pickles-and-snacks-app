@@ -25,6 +25,7 @@ users = {}
 REVIEWS_FILE = 'reviews.txt'
 CONTACTS_FILE = 'contacts.txt'
 
+
 # Product List with Online Image URLs
 products = [
     # Non-Veg Pickles
@@ -126,6 +127,27 @@ def login_required(f):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return wrapper
+
+@app.route('/')
+def index():
+    if 'username' in session:
+        return redirect(url_for('home_page'))
+    return redirect(url_for('login'))
+
+@app.route('/home')
+@login_required
+def home_page():
+    return render_template_string("""
+    <h1>Welcome {{ session['username'] }}</h1>
+    <nav>
+        <a href="{{ url_for('products_page') }}">Products</a> |
+        <a href="{{ url_for('cart') }}">Cart</a> |
+        <a href="{{ url_for('contact') }}">Contact</a> |
+        <a href="{{ url_for('product_reviews') }}">Reviews</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+    """)
+
 
 # Contact Page
 @app.route('/contact', methods=['GET', 'POST'])
@@ -259,7 +281,7 @@ def login():
         if users.get(username) == password:
             session['username'] = username
             flash("Logged in successfully!", "success")
-            return redirect(url_for('products_page'))
+            return redirect(url_for('home_page'))
         else:
             flash("Invalid username or password.", "error")
     return render_template_string("""
@@ -285,7 +307,7 @@ def add_to_cart(product_id):
     product = next((p for p in products if p['id'] == product_id), None)
     if not product:
         flash('Product not found', 'error')
-        return redirect(url_for('products_page'))
+        return redirect(url_for('home_page'))
 
     cart = session.get('cart', {})
     key = str(product_id)
