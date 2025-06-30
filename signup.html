@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swetha Pickles and Snacks| Homemade Indian Pickles & Snacks</title>
+    <meta name="description" content="Authentic homemade Indian pickles and snacks by Swetha Pickles and Snacks">
+    <script src="https://cdn.tailwihttps://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpghttps://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpghttps://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpghttps://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpghttps://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpgndcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        header: "#facc15",  // Vibrant yellow
+                        main: "#fef9c3",    // Pale yellow
+                        footer: "#000000"   // Pure black
+                    },
+                    fontFamily: {
+                        heading: ["'Playfair Display', serif"],
+                        body: ["'Open Sans', sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdn.shopify.com/s/files/1/1857/6931/files/Indian-Pickle_10cc540d-27e3-4c82-b0ec-1d114a661776_600x600.jpg?v=1655543167<style>
+        .hero-image {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="font-body bg-main text-gray-800">
+    <!-- Yellow Header -->
+    <header class="bg-header shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpg" alt="Homemade Pickles logo - traditional Indian pickle jar with yellow background" class="h-12 w-12 rounded-full object-cover border-2 border-white">
+                    <h1 class="ml-3 text-2xl font-heading font-bold text-gray-800">Homemade Pickles and Snacks</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-8">
+                        <li><a href="#login" class="font-semibold text-gray-800 hover:text-white transition">login</a></li>
+                        <li><a href="#home" class="font-semibold text-gray-800 hover:text-white transition">Home</a></li>
+                        <li><a href="#products" class="font-semibold text-gray-800 hover:text-white transition">Products</a></li>
+                        <li><a href="#about" class="font-semibold text-gray-800 hover:text-white transition">About</a></li>
+                        <li><a href="#contact" class="font-semibold text-gray-800 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="md:hidden text-gray-800">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+  <!-- Login/Register Modal -->
+   
+<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-dark" id="authModalTitle">Login</h2>
+                <button id="closeAuthModal" class="text-gray-500 hover:text-dark">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="loginEmail" class="block text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="rememberMe" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    <a href="#" class="text-sm text-primary hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-secondary transition">
+                    Login
+                </button>
+                <p class="text-center text-gray-600">
+                    Don't have an account? 
+                    <a href="#" id="showSignup" class="text-primary hover:underline">Sign up</a>
+                </p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="space-y-4 hidden">
+                <div>
+                    <label for="registerName" class="block text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="registerName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div>
+                    <label for="registerEmail" class="block text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="registerEmail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div>
+                    <label for="registerPassword" class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" id="registerPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div>
+                    <label for="registerConfirmPassword" class="block text-gray-700 mb-2">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="agreeTerms" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" required>
+                    <label for="agreeTerms" class="ml-2 block text-sm text-gray-700">
+                        I agree to the <a href="#" class="text-primary hover:underline">Terms of Service</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a>
+                    </label>
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-secondary transition">
+                    Create Account
+                </button>
+                <p class="text-center text-gray-600">
+                    Already have an account? 
+                    <a href="#" id="showLogin" class="text-primary hover:underline">Login</a>
+                </p>
+            </form>
+
+            <!-- Social Login -->
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                <div class="mt-6 grid grid-cols-2 gap-3">
+                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <i class="fab fa-google text-red-500 mr-2"></i> Google
+                    </a>
+                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <i class="fab fa-facebook-f text-blue-600 mr-2"></i> Facebook
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auth Modal Functionality
+    const authModal = document.getElementById('authModal');
+    const closeAuthModal = document.getElementById('closeAuthModal');
+    const showSignup = document.getElementById('showSignup');
+    const showLogin = document.getElementById('showLogin');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const authModalTitle = document.getElementById('authModalTitle');
+
+    // Show login modal when clicking login links
+    document.querySelectorAll('a[href="#login"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    closeAuthModal.addEventListener('click', () => {
+        authModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+
+    showSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        authModalTitle.textContent = 'Create Account';
+    });
+
+    showLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        authModalTitle.textContent = 'Login';
+    });
+
+    // Form submissions
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        // Simple validation
+        if (email && password) {
+            alert('Login successful! Welcome back.');
+            authModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            
+            // Update UI to show logged in state
+            document.querySelector('a[href="#login"]').innerHTML = `
+                <i class="fas fa-user-check text-xl"></i>
+            `;
+        } else {
+            alert('Please fill in all fields');
+        }
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('registerConfirmPassword').value;
+        
+        // Validation
+        if (!name || !email || !password || !confirmPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        
+        if (!document.getElementById('agreeTerms').checked) {
+            alert('You must agree to the terms and conditions');
+            return;
+        }
+        
+        alert('Account created successfully! Welcome to MediCare.');
+        registerForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        authModalTitle.textContent = 'Login';
+        
+        // Clear form
+        registerForm.reset();
+    });
+
+    // Close modal when clicking outside
+    authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+            authModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+  </script>
+  
+</section>
+</html>
