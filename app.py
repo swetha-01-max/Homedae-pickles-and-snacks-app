@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string, redirect, url_for, session, request, flash
+from flask import Flask, render_template_string, render_template , redirect, url_for, session, request, flash
 from functools import wraps
 from werkzeug.exceptions import BadRequest
 import os
@@ -147,7 +147,11 @@ def contact():
         contacts = []
 
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">
     <h2 style="color:#2c3e50;">Contact Us</h2>
     <form method="POST">
         Name: <input type="text" name="name" required><br><br>
@@ -189,7 +193,11 @@ def product_reviews():
 
 
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">
     <h2 style="color:#2c3e50;">Leave a Review</h2>
     <form method="POST">
         <textarea name="review" rows="4" cols="50" placeholder="Write your review here..." required></textarea><br><br>
@@ -203,18 +211,26 @@ def product_reviews():
     </ul>
     <a href="{{ url_for('products_page') }}">⬅ Back to Products</a>
     """, reviews=reviews)
-    
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+   
 @app.route('/')
 @login_required
 def products_page():
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">
     <h1 style="color:#2c3e50;">Welcome, {{ session['username'] }}!</h1>
-    <a href="{{ url_for('logout') }}">Logout</a><br><br>
-                                  
+    <a href="{{ url_for('logout') }}">Logout</a><br><br>                             
     <a href="{{ url_for('contact') }}">📬 Contact</a> |
-    <a href="{{ url_for('product_reviews') }}">⭐ Reviews</a><br><br>
-
+    <a href="{{ url_for('product_reviews') }}">⭐ Reviews</a> |
+    <a href="{{ url_for('about') }}"> ℹ️About</a><br><br>   
+                                                                          
     <h2 style="color:#34495e;">Products</h2>
     <ul style="list-style:none;">
         {% for product in products %}
@@ -243,7 +259,11 @@ def register():
             flash("Registered successfully. Please login.", "success")
             return redirect(url_for('login'))
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">
     <h2 style="color:#2c3e50;">Register</h2>
     <form method="POST">
         Username: <input type="text" name="username"><br><br>
@@ -265,7 +285,11 @@ def login():
         else:
             flash("Invalid username or password.", "error")
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                          
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">                          
     <h2 style="color:#2c3e50;">Login</h2>
     <form method="POST">
         Username: <input type="text" name="username"><br><br>
@@ -349,7 +373,11 @@ def cart():
     total = subtotal + shipping
 
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                             
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">                             
     <h1 style="color:#2c3e50;">Your Cart ({{ session['username'] }})</h1>
     <a href="{{ url_for('logout') }}">Logout</a><br><br>
     {% if cart_items %}
@@ -393,7 +421,11 @@ def checkout():
             total += product['price'] * quantity
 
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                              
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">                              
     <h1  style="color:#2c3e50;">Checkout</h1>
     {% if cart_items %}
         <ul style="list-style:none;">
@@ -425,7 +457,11 @@ def place_order():
 @login_required
 def order_success():
     return render_template_string("""
-    <body style="background-color:#f0f8ff; font-family:sans-serif; padding:20px;">                             
+    <body style="background-image: url('{{ url_for('static', filename='bg.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             font-family: sans-serif;
+             padding: 20px;">                             
     <h2>✅ Order Successful!</h2>
     <p>Thank you for your order, {{ session['username'] }}! 😊</p>
     <a href="{{ url_for('products_page') }}">← Back to Products</a><br>
