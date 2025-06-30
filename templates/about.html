@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Homemade Pickles & Snacks</title>
+  <meta name="description" content="Authentic homemade Indian pickles and snacks by Swetha" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Make sure bg.jpg is in /static -->
+</head>
+<script>
+
+
+  </script>  
+
+
+  <!-- Navbar -->
+  <header class="bg-yellow-400 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">Homemade Pickles & Snacks</h1>
+        <nav>
+          <ul class="flex space-x-6 font-semibold text-gray-800">
+            <li><a href="{{ url_for('products_page') }}" class="hover:text-white">Home</a></li>
+            <li><a href="{{ url_for('contact') }}" class="hover:text-white">Contact</a></li>
+            <li><a href="{{ url_for('product_reviews') }}" class="hover:text-white">Reviews</a></li>
+            <li><a href="{{ url_for('about') }}" class="hover:text-white">About</a></li>
+            <li><a href="{{ url_for('cart') }}" class="hover:text-white">Cart 🛒</a></li>
+            <li><a href="{{ url_for('logout') }}" class="hover:text-white">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section class="py-16 px-4 max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center gap-8 bg-white bg-opacity-90 p-6 rounded-xl shadow-lg">
+      <div class="md:w-1/2">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsZTb5Yfaimh094dyw2xLSPrxYz4yLo1GGEA&s" alt="Homemade preparing pickles" class="rounded-lg shadow-xl border-4 border-white mb-6">
+        <img src="https://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpg" alt="Pickle jars" class="rounded-lg shadow-xl border-4 border-white">
+      </div>
+      <div class="md:w-1/2">
+        <h2 class="text-3xl font-bold mb-6">About Homemade Pickles and Snacks</h2>
+        <p class="mb-4 text-lg">Homemade Pickles and Snacks is a homegrown brand that brings you authentic Indian pickles made with traditional recipes and the finest ingredients. Our pickles are made in small batches to ensure quality and freshness.</p>
+        <p class="mb-4 text-lg">Every jar is prepared with care and love using recipes perfected over generations in our family.</p>
+        <p class="text-lg">We use no artificial preservatives – just natural ingredients and traditional methods to create flavors that remind you of your grandmother’s kitchen.</p>
+
+        <div class="mt-8 bg-white p-6 rounded-lg shadow-sm border-l-4 border-yellow-400">
+          <h3 class="text-xl font-bold mb-3">Our Process</h3>
+          <ul class="space-y-2">
+            <li class="flex items-start">✔️ Hand-selected fresh ingredients</li>
+            <li class="flex items-start">✔️ Traditional sun-drying methods</li>
+            <li class="flex items-start">✔️ Small batch preparation</li>
+            <li class="flex items-start">✔️ No artificial preservatives</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white text-center py-6 mt-12">
+    <p>&copy; 2025 Homemade Pickles & Snacks. All rights reserved.</p>
+  </footer>
+
+  <!-- Font Awesome Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-heading font-bold text-center mb-12 text-gray-800">What Our Customers Say</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-main p-6 rounded-lg border-2 border-header">
+                    <div class="flex items-center mb-4">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw3MgYXl7l8_5v3hgfkgmYmcZE2zrl4WTk6A&s" alt="Tasty Tradition" class="w-12 h-12 rounded-full object-cover border-2 border-white">>
+                        <div class="ml-3">
+                            <h4 class="font-bold">Ramesh Kumar</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"The mango pickle tastes just like my mother used to make. Authentic flavor and perfect spice level!"</p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-main p-6 rounded-lg border-2 border-header">
+                    <div class="flex items-center mb-4">
+                        <img src="https://photosmint.com/wp-content/uploads/2025/03/Indian-Beauty-DP.jpeg" alt="Customer Priya Sharma" class="w-12 h-12 rounded-full object-cover border-2 border-white">
+                        <div class="ml-3">
+                            <h4 class="font-bold">Priya Sharma</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Yummy chicken pickle,i enjoyed a lot . Taste was excellent"</p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-main p-6 rounded-lg border-2 border-header">
+                    <div class="flex items-center mb-4">
+                        <img src="https://i.pinimg.com/736x/48/5a/01/485a0101007cd39acfb3fbeeefcc1075.jpg" alt="Customer Arjun Patel" class="w-12 h-12 rounded-full object-cover border-2 border-white">
+                        <div class="ml-3">
+                            <h4 class="font-bold">Arjun Patel</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Received my order quickly and packaging was excellent. The mixed veg pickle is amazing with rotis!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</html>

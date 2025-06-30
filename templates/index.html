@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homemade Indian Pickles & Snacks</title>
+  <meta name="description" content="Authentic homemade Indian pickles and snacks by Swetha Pickles and Snacks" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome for the hamburger icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <!-- Google Fonts (Playfair Display for headings, Open Sans for body) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind custom config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            header: "#facc15", // vibrant yellow
+            main: "#fef9c3",   // pale yellow
+            footer: "#000000"  // pure black
+          },
+          fontFamily: {
+            heading: ["Playfair Display", "serif"],
+            body: ["Open Sans", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Simple shadow / hover effects if you decide to add more hero content later */
+    .hero-image {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+    .product-card {
+      transition: all 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+
+<body class="font-body bg-main text-gray-800">
+  <!-- Header (sticky) -->
+  <header class="bg-header shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <img
+            src="https://masalamonk.com/wp-content/uploads/2025/02/Unusual-Indian-Pickles.jpg"
+            alt="Homemade Pickles logo"
+            class="h-12 w-12 rounded-full object-cover border-2 border-white" />
+          <h1 class="ml-3 text-2xl font-heading font-bold text-gray-800">Homemade Pickles and Snacks</h1>
+        </div>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:block">
+          <ul class="flex space-x-8">
+            <li><a href="#login" class="font-semibold hover:text-white transition">Login</a></li>
+            <li><a href="#home" class="font-semibold hover:text-white transition">Home</a></li>
+            <li><a href="#products" class="font-semibold hover:text-white transition">Products</a></li>
+            <li><a href="#about" class="font-semibold hover:text-white transition">About</a></li>
+            <li><a href="#contact" class="font-semibold hover:text-white transition">Contact</a></li>
+            <li><a href="#Cart🛒" class="font-semibold text-gray-800 hover:text-white transition">Cart🛒</a></li>
+          </ul>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <button class="md:hidden text-gray-800">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero with centered big heading -->
+  <main class="flex items-center justify-center min-h-screen bg-main">
+    <h2 class="font-heading text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight tracking-wide">
+     Welcome to Homemade Pickles and Snacks
+    </h2>
+  </main>
+</body>
+</html>

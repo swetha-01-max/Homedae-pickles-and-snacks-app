@@ -1,0 +1,6 @@
+
+flask
+werkzeug
+
+Flask
+boto3
