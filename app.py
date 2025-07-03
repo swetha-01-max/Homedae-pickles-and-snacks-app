@@ -51,7 +51,7 @@ logger = logging.getLogger(__name__)
 
 # -------------------- AWS Setup --------------------
 
-dynamodb = boto3.resource('dynamodb', region_name=region)
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 orders_table = dynamodb.Table(DYNAMODB_TABLE)
 users_table = dynamodb.Table('users')
 
