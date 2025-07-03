@@ -1,30 +1,111 @@
-from flask import Flask, render_template_string, render_template , redirect, url_for, session, request, flash
+from flask import Flask, render_template_string, render_template , redirect, url_for, session, request, flash, jsonify
 from functools import wraps
+import smtplib
+import logging
+from email.mime.text import MIMEText
+from datetime import datetime
 from werkzeug.exceptions import BadRequest
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import boto3
 import uuid
 
+
+# -------------------- Config --------------------
+
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
+app.secret_key = os.environ.get('SECRET_KEY', '2cb6fa3d0a3ae9f95aeb114f8c5ed24ef961c6ef95d07cfd39db306e7c2e7aa0')
 
 # AWS configuration
 region = 'ap-south-1'  # Change if needed
+DYNAMODB_TABLE = 'PickleOrders'
+
+# Email settings
+EMAIL_HOST = 'smtp.@gmail.com'
+EMAIL_PORT = 587
+EMAIL_USER = '@gmail.com'
+EMAIL_PASSWORD = ""
+
+
+# -------------------- Logger Setup --------------------
+
+log_folder = 'logs'
+log_file = os.path.join(log_folder, 'app.log')
+
+if os.path.exists(log_folder):
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler()
+        ]
+    )
+else:
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+
+logger = logging.getLogger(__name__)
+
+# -------------------- AWS Setup --------------------
 
 dynamodb = boto3.resource('dynamodb', region_name=region)
+orders_table = dynamodb.Table(DYNAMODB_TABLE)
+users_table = dynamodb.Table('users')
+
+# SNS Setup
+
 sns = boto3.client('sns', region_name=region)
+
+# -------------------- Helper Functions --------------------
+
+def send_order_email(to_email, order_summary):
+    try:
+        msg = MIMEText(order_summary)
+        msg['Subject'] = 'Your Order Confirmation'
+        msg['From'] = EMAIL_USER
+        msg['To'] = to_email
+
+        with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_USER, EMAIL_PASSWORD)
+            server.send_message(msg)
+
+        logger.info("Order email sent to %s", to_email)
+    except Exception as e:
+        logger.error("Failed to send email: %s", e)
+def save_order_to_dynamodb(order_data):
+    try:
+        orders_table.put_item(Item=order_data)
+        logger.info("Order saved to DynamoDB: %s", order_data['order_id'])
+    except Exception as e:
+        logger.error("DynamoDB error: %s", e)
+
+def send_sns_notification(message, phone_number=None, topic_arn=None):
+    try:
+        if phone_number:
+            sns.publish(PhoneNumber=phone_number, Message=message)
+            logger.info(f"SNS SMS sent to {phone_number}")
+        elif topic_arn:
+            sns.publish(TopicArn=topic_arn, Message=message)
+            logger.info(f"SNS message published to topic {topic_arn}")
+        else:
+            logger.info("SNS notification skipped (no phone number or topic)")
+    except Exception as e:
+        logger.error("SNS send failed: %s", e)
 
 # DynamoDB tables
 contacts_table = dynamodb.Table('contacts')
 reviews_table = dynamodb.Table('reviews')
 
-# Simple in-memory user storage
+ # Simple in-memory user storage
 users = {}
 
 # Store reviews and contacts in files
 REVIEWS_FILE = 'reviews.txt'
 CONTACTS_FILE = 'contacts.txt'
-
 
 # Product List with Online Image URLs
 products = [
@@ -416,6 +497,7 @@ def checkout():
             cart_items.append({
                 'name': product['name'],
                 'quantity': quantity,
+                'items': cart,
                 'price': product['price']
             })
             total += product['price'] * quantity
@@ -437,12 +519,19 @@ def checkout():
         <form method="POST" action="{{ url_for('place_order') }}">
         Name:<input name="name"><br>
         Address:<input name="address"><br>
+        email:<input name="email"><br>                         
         phone:=<input name="phone"><br> action="{{ url_for('place_order') }}">
         <button type="submit">✅ Place Order</button>
         </form>
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %}
+     save_order_to_dynamodb(order_data)
+     send_order_email(email, summary)
+
+        # (Optional) SNS call is defined but not triggered here
+        # send_sns_notification("New order received.")
+
     <a href="{{ url_for('cart') }}">← Back to Cart</a>
     """, cart_items=cart_items, total=total)
 
@@ -451,6 +540,8 @@ def checkout():
 def place_order():
     session['cart'] = {}
     flash("🎉 Your order has been placed successfully!", "success")
+    session.pop('cart', None)
+    logger.info("Order placed and cart cleared.")
     return redirect(url_for('order_success'))
 
 @app.route('/success')
@@ -468,5 +559,17 @@ def order_success():
     <a href="{{ url_for('logout') }}">🚪 Logout</a>
     """)
 
+# -------------------- Error Pages --------------------
+
+@app.errorhandler(404)
+def not_found_error(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(e):
+    return render_template('500.html'), 500
+
+
+
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))   
