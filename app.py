@@ -51,13 +51,11 @@ logger = logging.getLogger(__name__)
 
 # -------------------- AWS Setup --------------------
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
-orders_table = dynamodb.Table(DYNAMODB_TABLE)
-users_table = dynamodb.Table('users')
+dynamodb = boto3.resource('dynamodb', region_name=region)
 
 # SNS Setup
 
-sns = boto3.client('sns', region_name=region)
+sns = boto3.client('sns', region_name='us-east-1')
 
 # -------------------- Helper Functions --------------------
 
@@ -97,6 +95,8 @@ def send_sns_notification(message, phone_number=None, topic_arn=None):
         logger.error("SNS send failed: %s", e)
 
 # DynamoDB tables
+orders_table = dynamodb.Table('orders')
+users_table = dynamodb.Table('users')
 contacts_table = dynamodb.Table('contacts')
 reviews_table = dynamodb.Table('reviews')
 
@@ -572,4 +572,4 @@ def internal_error(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))   
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))   
